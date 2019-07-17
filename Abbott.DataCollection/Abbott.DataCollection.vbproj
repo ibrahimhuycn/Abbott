@@ -75,6 +75,8 @@
   <ItemGroup>
     <Compile Include="AbbottSpecifications\AbbottDataCollectionFormat.vb" />
     <Compile Include="AbbottSpecifications\Priority.vb" />
+    <Compile Include="DatabaseTables\AbbottDataDbFormat.vb" />
+    <Compile Include="DatabaseTables\AbbottDataFinal.vb" />
     <Compile Include="DataCollectionUI.vb">
       <SubType>Form</SubType>
     </Compile>
