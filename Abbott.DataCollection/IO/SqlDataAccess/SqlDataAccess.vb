@@ -1,6 +1,5 @@
 ﻿Imports System.Data.SqlClient
 Imports Dapper
-Imports FakeItEasy
 
 Public Class SqlDataAccess
     Private Shared ReadOnly log As log4net.ILog = log4net.LogManager.GetLogger(Reflection.MethodBase.GetCurrentMethod().DeclaringType)

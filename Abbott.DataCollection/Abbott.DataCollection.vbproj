@@ -99,14 +99,15 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Data\Helper.vb" />
-    <Compile Include="EventTimings.vb" />
+    <Compile Include="Data\EventTimings.vb" />
     <Compile Include="FileProcessing.Designer.vb">
       <DependentUpon>FileProcessing.vb</DependentUpon>
     </Compile>
     <Compile Include="FileProcessing.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FileSystemIO.vb" />
+    <Compile Include="IO\Disk\FileSystemIO.vb" />
+    <Compile Include="Data\LogAnalyteSpecificData.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -122,11 +123,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ProgressIndicator.vb" />
-    <Compile Include="ResultsLogAttributes.vb" />
-    <Compile Include="SqlDataAccess\DistinctSampleId.vb" />
-    <Compile Include="SqlDataAccess\RunWildArgs.vb" />
-    <Compile Include="SqlDataAccess\SqlDataAccess.vb" />
+    <Compile Include="UiModifications\ProgressIndicator.vb" />
+    <Compile Include="Data\ResultsLogAttributes.vb" />
+    <Compile Include="IO\SqlDataAccess\DistinctSampleId.vb" />
+    <Compile Include="IO\SqlDataAccess\RunWildArgs.vb" />
+    <Compile Include="IO\SqlDataAccess\SqlDataAccess.vb" />
+    <Compile Include="IO\SqlDataAccess\SqlLiteDataAccess.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataCollectionUI.resx">
@@ -143,7 +145,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LogData.db">
+    <None Include="Data\LogData.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="My Project\Application.myapp">

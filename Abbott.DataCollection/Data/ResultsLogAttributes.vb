@@ -12,9 +12,3 @@ Public Class ResultsLogAttributes
     Public Property AnalyteList As List(Of LogAnalyteSpecificData)
 
 End Class
-
-Public Class LogAnalyteSpecificData
-
-    Public Property MachineParameter As String
-    Public Property TechnicalValidation As DateTime?
-End Class
