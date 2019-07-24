@@ -48,10 +48,27 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper, Version=12.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.12.1.2\lib\net45\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeItEasy, Version=5.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.5.1.1\lib\net45\FakeItEasy.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -74,9 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbbottSpecifications\AbbottDataCollectionFormat.vb" />
-    <Compile Include="AbbottSpecifications\Priority.vb" />
-    <Compile Include="DatabaseTables\AbbottDataDbFormat.vb" />
-    <Compile Include="DatabaseTables\AbbottDataFinal.vb" />
     <Compile Include="DataCollectionUI.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +98,15 @@
       <DependentUpon>DataCollectionUI.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Data\Helper.vb" />
+    <Compile Include="EventTimings.vb" />
+    <Compile Include="FileProcessing.Designer.vb">
+      <DependentUpon>FileProcessing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FileProcessing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileSystemIO.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -99,10 +122,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ProgressIndicator.vb" />
+    <Compile Include="ResultsLogAttributes.vb" />
+    <Compile Include="SqlDataAccess\DistinctSampleId.vb" />
+    <Compile Include="SqlDataAccess\RunWildArgs.vb" />
+    <Compile Include="SqlDataAccess\SqlDataAccess.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DataCollectionUI.resx">
       <DependentUpon>DataCollectionUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileProcessing.resx">
+      <DependentUpon>FileProcessing.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -122,6 +153,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
