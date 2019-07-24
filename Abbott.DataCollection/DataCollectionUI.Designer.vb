@@ -33,7 +33,7 @@ Partial Class DataCollectionUI
         'ButtonProcessData
         '
         Me.ButtonProcessData.Font = New System.Drawing.Font("Cambria", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonProcessData.Location = New System.Drawing.Point(86, 60)
+        Me.ButtonProcessData.Location = New System.Drawing.Point(86, 81)
         Me.ButtonProcessData.Name = "ButtonProcessData"
         Me.ButtonProcessData.Size = New System.Drawing.Size(116, 23)
         Me.ButtonProcessData.TabIndex = 0
@@ -50,9 +50,10 @@ Partial Class DataCollectionUI
         '
         'LabelPleaseWait
         '
-        Me.LabelPleaseWait.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelPleaseWait.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LabelPleaseWait.Font = New System.Drawing.Font("Cambria", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelPleaseWait.Location = New System.Drawing.Point(12, 9)
+        Me.LabelPleaseWait.Location = New System.Drawing.Point(12, 7)
         Me.LabelPleaseWait.Name = "LabelPleaseWait"
         Me.LabelPleaseWait.Size = New System.Drawing.Size(309, 15)
         Me.LabelPleaseWait.TabIndex = 2
@@ -61,9 +62,10 @@ Partial Class DataCollectionUI
         '
         'LabelProgressDetails
         '
-        Me.LabelProgressDetails.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LabelProgressDetails.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LabelProgressDetails.Font = New System.Drawing.Font("Cambria", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelProgressDetails.Location = New System.Drawing.Point(9, 24)
+        Me.LabelProgressDetails.Location = New System.Drawing.Point(9, 22)
         Me.LabelProgressDetails.Name = "LabelProgressDetails"
         Me.LabelProgressDetails.Size = New System.Drawing.Size(312, 15)
         Me.LabelProgressDetails.TabIndex = 3
@@ -77,7 +79,7 @@ Partial Class DataCollectionUI
         'ButtonOpenLogReader
         '
         Me.ButtonOpenLogReader.Font = New System.Drawing.Font("Cambria", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonOpenLogReader.Location = New System.Drawing.Point(208, 60)
+        Me.ButtonOpenLogReader.Location = New System.Drawing.Point(208, 81)
         Me.ButtonOpenLogReader.Name = "ButtonOpenLogReader"
         Me.ButtonOpenLogReader.Size = New System.Drawing.Size(116, 23)
         Me.ButtonOpenLogReader.TabIndex = 4
@@ -88,7 +90,7 @@ Partial Class DataCollectionUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(336, 90)
+        Me.ClientSize = New System.Drawing.Size(336, 112)
         Me.Controls.Add(Me.ButtonOpenLogReader)
         Me.Controls.Add(Me.LabelProgressDetails)
         Me.Controls.Add(Me.LabelPleaseWait)

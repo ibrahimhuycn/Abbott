@@ -1,5 +1,5 @@
-﻿Imports System.IO
-Imports Abbott.DataCollection
+﻿Imports System.ComponentModel
+Imports System.IO
 
 Public Class FileProcessing
     Private Shared ReadOnly log As log4net.ILog = log4net.LogManager.GetLogger(Reflection.MethodBase.GetCurrentMethod().DeclaringType)
@@ -9,7 +9,10 @@ Public Class FileProcessing
     Private BasePath As String = "C:\Users\ibrah\OneDrive\Documents\AbbottData\OrdersResultsLogs\ResultLog\"
 
     Private Sub ButtonProcessFiles_Click(sender As Object, e As EventArgs) Handles ButtonProcessFiles.Click
-        BackgroundWorkerLogProcessor.RunWorkerAsync()
+        If Not BackgroundWorkerLogProcessor.IsBusy Then
+            ButtonProcessFiles.Enabled = False
+            BackgroundWorkerLogProcessor.RunWorkerAsync()
+        End If
     End Sub
 
     Public Shared Sub UploadData(resultsLogAttribute As ResultsLogAttributes)
@@ -162,16 +165,17 @@ Public Class FileProcessing
             BackgroundWorkerLogProcessor.ReportProgress(1 / TotalSteps,
                            New ProgressIndicator With {.Report = $"STEP ONE: Read log files from disk. File Count: {FilePathList.Count}"})
 
-
+            Dim Counter As Integer = 0
             For Each path In FilePathList
                 log.Info($"Loading file attributes. {path}")
-
-                For Each resultLog In ExtractData(New ResultsLogAttributes(path))
+                Dim extractedData = ExtractData(New ResultsLogAttributes(path))
+                For Each resultLog In extractedData
                     LogFileAttributes.Add(resultLog)
                 Next
 
-                BackgroundWorkerLogProcessor.ReportProgress(LogFileAttributes.Count / FilePathList.Count,
-                           New ProgressIndicator With {.Report = $"Extracting Data: {LogFileAttributes.Count} of {FilePathList.Count}"})
+                Counter += 1
+                BackgroundWorkerLogProcessor.ReportProgress(Math.Truncate((Counter / FilePathList.Count) * 100),
+                           New ProgressIndicator With {.Report = $"Extracting Data: {Counter} of {FilePathList.Count}"})
 
             Next
 
@@ -185,7 +189,11 @@ Public Class FileProcessing
 
     Private Sub BackgroundWorkerLogProcessor_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorkerLogProcessor.ProgressChanged
         Dim progress As ProgressIndicator = e.UserState
-        ProgressBar1.Value = e.ProgressPercentage * 100
+        ProgressBarDataProcess.Value = e.ProgressPercentage
         LabelDataProcessDisplay.Text = progress.Report
+    End Sub
+
+    Private Sub BackgroundWorkerLogProcessor_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BackgroundWorkerLogProcessor.RunWorkerCompleted
+        ButtonProcessFiles.Enabled = True
     End Sub
 End Class
