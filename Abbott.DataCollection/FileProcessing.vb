@@ -5,6 +5,7 @@ Public Class FileProcessing
     Private Shared ReadOnly log As log4net.ILog = log4net.LogManager.GetLogger(Reflection.MethodBase.GetCurrentMethod().DeclaringType)
 
     Dim FilePathList As List(Of String)
+    'Private BasePath As String = "C:\Users\ibrah\Music\"
     Private BasePath As String = "C:\Users\ibrah\OneDrive\Documents\AbbottData\OrdersResultsLogs\ResultLog\"
 
     Private Sub ButtonProcessFiles_Click(sender As Object, e As EventArgs) Handles ButtonProcessFiles.Click
@@ -53,10 +54,15 @@ Public Class FileProcessing
                         Dim Analyte As New LogAnalyteSpecificData
                         log.Info("Processing current ASTM Result frame")
 
-
                         Dim machineParameter = line.Split("|")(2).Split("^")(3)
-                        Dim TechinicalValidation = line.Split("|")(12).Split("^")(0)
+                        Dim TechinicalValidation As String
 
+                        If Not line.Contains("iSR54792") Then
+                            TechinicalValidation = line.Split("|")(12).Split("^")(0)
+                        Else
+                            TechinicalValidation = line.Split("|")(12)
+                            log.Warn("Condition applied for SeroIsr iSR54792 while processing field data.")
+                        End If
                         Analyte.MachineParameter = machineParameter
                         Analyte.TechnicalValidation = DateTime.ParseExact(TechinicalValidation,
                                                  "yyyyMMddHHmmss", Globalization.CultureInfo.InvariantCulture)
@@ -66,6 +72,7 @@ Public Class FileProcessing
 
                         ResultLog.AnalyteList.Add(Analyte)
                         log.Info("Analyte added to the ResultLog")
+
                     Else
 
                         Select Case True
@@ -119,7 +126,7 @@ Public Class FileProcessing
                 'For sero ISR
                 If line.Contains("iSR54792") Then
                     If FieldCount = iSR54792ResultFrameFieldCount Then ReturnValue = True
-                    log.Warn("Condition applied for SeroIsr iSR54792")
+                    log.Warn("Condition applied for SeroIsr iSR54792 while validating the frame.")
                 End If
         End Select
         Return ReturnValue
