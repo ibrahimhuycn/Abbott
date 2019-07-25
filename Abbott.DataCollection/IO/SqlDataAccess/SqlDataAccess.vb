@@ -10,13 +10,6 @@ Public Class SqlDataAccess
     '        Return Output.ToList
     '    End Using
     'End Function
-    'Public Shared Sub SaveRequest(e As List(Of LisRequestDataModel))
-    '    For Each request In e
-    '        Using cnn As IDbConnection = New SQLiteConnection(Helper.GetConnectionString("localdb", True))
-    '            cnn.Execute("INSERT INTO [AnalysisRequest] ([Barcode],[PatientNo],[PatientName],[Genders_id],[DateOfBirth],[created_at]) values (@Barcode,@PatientNo,@PatientName,@Genders_id,@DateOfBirth,@created_at)", request)
-    '        End Using
-    '    Next
-    'End Sub
     'Public Shared Sub DeleteRequest(Barcode As String)
     '    Dim Parameter = New With {Key .Barcode = Barcode}
     '    Using cnn As IDbConnection = New SQLiteConnection(Helper.GetConnectionString("localdb", True))

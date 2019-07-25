@@ -15,17 +15,40 @@ Public Class FileProcessing
         End If
     End Sub
 
-    Public Shared Sub UploadData(resultsLogAttribute As ResultsLogAttributes)
+    Public Shared Sub UploadData(e As ResultsLogAttributes)
+        Dim UploadedSampleData As SampleStatus
+        log.Info("Check whether the sample is present in dbo.SampleLog.SampleNumber")
+        Dim status As SampleStatus = SqLiteDataAccess.IsSamplePresent(e)
 
+        Select Case True
+            Case status.SamplePresent = True
+
+                log.Info($"Sample is present. Sample Number: {status.SampleNumber}. dbo.SampleLog.Id: {status.Id}")
+                For Each analyte In e.AnalyteList
+                    log.Info("If analyte is not present for the sample, upload the analyte.")
+
+                Next
+            Case status.SamplePresent = False
+                log.Info("Update database with sample data and fetch the Id.")
+                UploadedSampleData = SqLiteDataAccess.UploadSampleReturnInserted(e)
+        End Select
+        If status.SamplePresent = True Then
+
+        End If
+        log.Info("Sample not present in dbo.SampleLog. Uploading the sample and Fetching the Id")
+        log.Info("Uploading parameters.")
+
+        log.Info("Sample present in dbo.SamppleLog, Fetched dbo.SampleLog.Id, proceeding to upload parameters.")
+        log.Info("Parameters upload completed.")
     End Sub
-    Public Shared Function ExtractData(resultsLogAttribute As ResultsLogAttributes) As List(Of ResultsLogAttributes)
+    Public Shared Function ExtractData(resultsLogAttribute As ResultsLogAttributes, filepath As String) As List(Of ResultsLogAttributes)
         Dim IsExpectingResultFrames As Boolean = False
         Dim SkipResultProcessing As Boolean = False
         Dim ListOfLogs As New List(Of ResultsLogAttributes)
         Dim ResultLog As ResultsLogAttributes
 
 
-        For Each line In File.ReadLines(resultsLogAttribute.FilePath)
+        For Each line In File.ReadLines(filepath)
 
             Dim PredeterminedFrameType As AstmFrameType = DetermineFrameType(line)
             Dim IsFrameValid = IsASTMFrameValid(line, PredeterminedFrameType)
@@ -44,7 +67,7 @@ Public Class FileProcessing
                             ListOfLogs.Add(ResultLog)
                         End If
                         Dim SampleNumber As String = line.Split("|")(2)
-                        ResultLog = New ResultsLogAttributes(resultsLogAttribute.FilePath) With {.SampleNumber = SampleNumber}
+                        ResultLog = New ResultsLogAttributes(filepath) With {.SampleNumber = SampleNumber}
 
                         log.Info($"Created new log instance for a new sample number: {SampleNumber}")
                     Else
@@ -66,6 +89,7 @@ Public Class FileProcessing
                             TechinicalValidation = line.Split("|")(12)
                             log.Warn("Condition applied for SeroIsr iSR54792 while processing field data.")
                         End If
+                        Analyte.FilePath = filepath
                         Analyte.MachineParameter = machineParameter
                         Analyte.TechnicalValidation = DateTime.ParseExact(TechinicalValidation,
                                                  "yyyyMMddHHmmss", Globalization.CultureInfo.InvariantCulture)
@@ -168,9 +192,10 @@ Public Class FileProcessing
             Dim Counter As Integer = 0
             For Each path In FilePathList
                 log.Info($"Loading file attributes. {path}")
-                Dim extractedData = ExtractData(New ResultsLogAttributes(path))
+                Dim extractedData = ExtractData(New ResultsLogAttributes(path), path)
                 For Each resultLog In extractedData
-                    LogFileAttributes.Add(resultLog)
+                    ' LogFileAttributes.Add(resultLog)
+                    UploadData(resultLog)
                 Next
 
                 Counter += 1
